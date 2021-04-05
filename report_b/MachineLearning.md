@@ -37,6 +37,9 @@ y(n,1;次元) = X(n,m+1;次元) * w(m+1,1;次元) + ε(n,1;次元）
 式の導出。
 行列関連の公式としてmatrix cookbookが参考になる。
 
+## 実装
+演習を実行したgoogle colaboratoryのURL：https://colab.research.google.com/drive/1GetzrGgiYbQIH7FpsLVGKfmWMXlbh8IK?usp=sharing
+
 # 第2章 非線形回帰モデル
 # 第3章 ロジスティック回帰モデル
 # 第4章 主成分分析
