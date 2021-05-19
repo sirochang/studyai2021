@@ -259,7 +259,7 @@ TODO
 
 ```python
 # 【確認テスト】
-誤差逆伝播法で、すでに行った計算結果を保持しているソースコードを抜き出す。
+# 誤差逆伝播法で、すでに行った計算結果を保持しているソースコードを抜き出す。
 
 # 例えば出力層の活性化関数の誤差の微分結果はdelta2として保持している。
 delta2 = function.d_mean_squared_error(d, y)
@@ -276,7 +276,7 @@ delta1 = np.dot(delta2, W2.T) * function.d_sigmoid(z1)
 
 ```python
 # 【確認テスト】
-u(2)の誤差とW(2)の誤差のソースコードを抜き出す。
+# u(2)の誤差とW(2)の誤差のソースコードを抜き出す。
 
 # u(2)
 delta2 = function.d_mean_squared_error(d, y)
