@@ -25,7 +25,7 @@
 各層の入力部分である重みとバイアスを最適化することが目的である。
 ```
 
-NNは回帰と分類のどちらの問題も解くここができる
+NNは回帰と分類のどちらの問題も解くことができる
 * 回帰：連続する実数値を取る関数の近似
   * 線形回帰
   * 回帰木
@@ -41,7 +41,7 @@ NNは回帰と分類のどちらの問題も解くここができる
 ---
 
 # Section1：入力層〜中間層
-入力とバイアスと層間の重みの線形結合を活性化関数で変換して得られた結果を結合している層の出力とする（次の層の入力となる）。
+入力とバイアスと層間の重みの線形結合を活性化関数で変換し、得られた結果を対象層の出力とする（次の層の入力となる）。
 
 ```python
 # 【確認テスト】
@@ -90,7 +90,7 @@ z2 = functions.relu(u2)
 NNにおいて、次の層への出力の大きさを決める**非線形関数**であり、入力値によって次の層への信号のON/OFFや強弱を定める働きを持つ。
 ```
 【確認テスト】
-線形と非線形の違い
+線形と非線形の違いは？
 
 線形な関数は
 ・加法性：f(x+y)=f(x)+f(y)
@@ -203,6 +203,7 @@ print(-np.sum(np.log(y[np.arange(batch_size),t] + 1e-7))/batch_size)
 
 ## 実装
 Section1~Section3の演習を実行したgoogle colaboratoryのURL：https://colab.research.google.com/drive/148JuTkrdMI_GLkjSs2wu3969jFj2en4C?usp=sharing
+
 修正して実行した点：
 * ネットワークのノード数をソースから読み取って、コメント文を修正（5-10-20-1 ネットワークなど）
 
@@ -225,7 +226,7 @@ grad = backward(x, d, z1, y)
 
 誤差関数の値をより小さくする方向に重みWとバイアスbを更新し次の周（エポック）に反映する。
 
-＊ 勾配降下法：毎回、入力データ全てを使ってパラメータを更新する
+* 勾配降下法：毎回、入力データ全てを使ってパラメータを更新する
 * 確率的勾配降下法：毎回、データを1つずつランダムに選んでパラメータを更新する
   * データが冗長の場合の計算コストの削減
   * 望まない局所極小解に収束するリスクの軽減
@@ -247,6 +248,7 @@ grad = backward(x, d, z1, y)
 
 ## 実装
 演習を実行したgoogle colaboratoryのURL：https://colab.research.google.com/drive/1EzcH-9ItBsbYDywEmdUAmTJZZzVhGu7M?usp=sharing
+
 修正して実行した点：
 * np.random.choiceの挙動確認
   * 確率的勾配降下法の通り、epochごとに1データセットを選択していることを確認
@@ -289,8 +291,9 @@ grad['W2'] = np.dot(z1.T, delta2)
 
 ## 実装
 演習を実行したgoogle colaboratoryのURL：https://colab.research.google.com/drive/1lBXyIr8TKfz5qaJV_6RpkBa2pO3S6szP?usp=sharing
+
 修正して実行した点：
-* backword内の「出力層でのデルタ」を求める式で、順伝播の出力層では softmax を使用していたので、逆伝播も d_softmax_with_loss を使用するよう修正
+* backward内の「出力層でのデルタ」を求める式で、順伝播の出力層では softmax を使用していたので、逆伝播も d_softmax_with_loss を使用するよう修正
 
 # その他
 ## ディープラーニングの開発環境
@@ -321,6 +324,7 @@ NNの学習（計算）に必要なPC部品。上から下に向かうほど計�
 
 ## 実装
 mnistサンプル演習を実行したgoogle colaboratoryのURL：https://colab.research.google.com/drive/1ZF2lT_n30s1F38BsnStzfkBMn5dXdagN?usp=sharing
+
 確認した点：
 * ミニバッチ勾配降下法を利用している
 * トレーニング/テストの正答率を10回に1回ずつ出力し、1,000回学習を行なっている
