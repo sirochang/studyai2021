@@ -206,6 +206,11 @@ print(-np.sum(np.log(y[np.arange(batch_size),t] + 1e-7))/batch_size)
 
 （参考文献）ゼロから作るDeepLearning
 
+## 実装
+Section1~Section3の演習を実行したgoogle colaboratoryのURL：https://colab.research.google.com/drive/148JuTkrdMI_GLkjSs2wu3969jFj2en4C?usp=sharing
+修正して実行した点：
+* ネットワークのノード数をソースから読み取って、コメント文を修正（5-10-20-1 ネットワークなど）
+
 # Section4：勾配降下法
 深層学習の目的は、学習を通して誤差を最小にするネットワークを構成することで、勾配降下法を利用してパラメータを最適化する。
 ```python
@@ -252,6 +257,12 @@ TODO
 誤差勾配の計算には数値微分を用いることもできるが、各パラメータWごとに誤差を計算するために順伝播の計算を繰り返し行う必要があり、負荷が大きいので誤差逆伝播法を利用する。
 数値微分とは、プログラムで微小な数値を生成し擬似的に微分を計算する一般的な手法である。
 
+## 実装
+演習を実行したgoogle colaboratoryのURL：https://colab.research.google.com/drive/1EzcH-9ItBsbYDywEmdUAmTJZZzVhGu7M?usp=sharing
+修正して実行した点：
+* np.random.choiceの挙動確認
+  * 確率的勾配降下法の通り、epochごとに1データセットを選択していることを確認
+
 # Section5：誤差逆伝播法
 算出された誤差を出力層側から順に微分し、前の層へと伝播させる。最小限の計算で各パラメータでの微分値を解析的に計算できる手法である。
 
@@ -288,6 +299,11 @@ grad['W2'] = np.dot(z1.T, delta2)
 今回のNNのu(2)で活性化関数は恒等写像なので、微分値は1で活性化関数前後で値は変わらない。
 動画ではおそらくu(1)とW(1)のソースコードの箇所について説明されているが、資料にもある通りu(2)とW(2)は上記のソースコードとなる。
 
+## 実装
+演習を実行したgoogle colaboratoryのURL：https://colab.research.google.com/drive/1lBXyIr8TKfz5qaJV_6RpkBa2pO3S6szP?usp=sharing
+修正して実行した点：
+* backword内の「出力層でのデルタ」を求める式で、順伝播の出力層では softmax を使用していたので、逆伝播も d_softmax_with_loss を使用するよう修正
+
 # その他
 ## ディープラーニングの開発環境
 NNの学習（計算）に必要なPC部品。上から下に向かうほど計算速度は上がるが、高価になる。
@@ -315,3 +331,8 @@ NNの学習（計算）に必要なPC部品。上から下に向かうほど計�
 * データを結合する
 * 数値の正規化・正則化
 
+## 実装
+mnistサンプル演習を実行したgoogle colaboratoryのURL：https://colab.research.google.com/drive/1ZF2lT_n30s1F38BsnStzfkBMn5dXdagN?usp=sharing
+確認した点：
+* ミニバッチ勾配降下法を利用している
+* トレーニング/テストの正答率を10回に1回ずつ出力し、1,000回学習を行なっている
