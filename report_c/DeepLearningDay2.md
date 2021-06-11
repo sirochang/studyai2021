@@ -75,6 +75,15 @@ for i in range(0, N, batch_size):
   _update(batch_x, batch_t)
 ```
 
+## 実装
+演習を実行したgoogle colaboratoryのURL：
+* 2層のNN構築：https://colab.research.google.com/drive/1MxhvBGocTveFrZO5k7nXqA8aK1FxFBcw?usp=sharing
+  * numpyのchoiceとsampleについて実行確認
+  * ループが前回選択したデータも再び選択候補に含まれることを確認
+* 活性化関数とXavier、Heの初期値：https://colab.research.google.com/drive/1urDwJfDM4ByeL5V1oGWFl4oxV9sItnGX?usp=sharing
+  * 活性化関数と初期値の与え方による学習結果の違いについて確認
+* バッチ正規化：https://colab.research.google.com/drive/1BF_zduMprXiIa5SM-ZKui54mTuAntwtP?usp=sharing
+
 # Section2：学習率最適化手法
 ## 全体像
 深層学習の目的は学習を通して誤差を最小にするネットワークを作成することで、勾配効果法を利用してパラメータを最適化する。
@@ -106,6 +115,9 @@ for i in range(0, N, batch_size):
 |  AdaGrad  |  ・誤差をパラメータで微分したものと、再定義した学習率の積を減算する | ・勾配の緩やかな斜面に対して最適値に近づける | 学習率が徐々に小さくなるので、鞍点問題を引き起こす |
 |  RMSProp  |  ・誤差をパラメータで微分したものと、再定義した学習率の積を減算する<br>前回の学習率の変化と誤差微分の割合を変えれる | ・局所最適解にならず大域的最適解となる<br>・ハイパーパラメータの調整が楽 | - |
 |  Adam  |  ・モメンタムとRMSProp両方の概要を含む<br>　・モメンタム：過去の勾配の指数関数的減衰平均 | ・モメンタムとRMSPropのメリットを含む | - |
+
+## 実装
+演習を実行したgoogle colaboratoryのURL：https://colab.research.google.com/drive/1rCyQEvaW67C9Zbr0vmS3GFRAzzALaKFF?usp=sharing
 
 # Section3：過学習
 ## 全体像
@@ -145,6 +157,14 @@ l1ノルムは|param|なので、その勾配が誤差の勾配に加えられ�
 NNのノード数が多いとネットワークの自由度が上がり、過学習に陥りやすい。ドロップアウトでは、NNのノード数をランダムに削除して学習させることである。
 
 データ量を変化させなくても、異なるモデルを学習させていると解釈できるのがメリットである。
+
+## 実装
+演習を実行したgoogle colaboratoryのURL：https://colab.research.google.com/drive/1IOP8GF0BufbZ6cfjU6EBSelOAYImzxw9?usp=sharing
+
+* 下記を確認
+  * L2正則化は過学習を抑えれている
+  * L1正則化はうまく学習できず、Dropoutは学習が遅い
+  * L1正則化とDropoutを組み合わせると、過学習を抑えながら学習を早く進めることができる
 
 # Section4：畳み込みニューラルネットワークの概念
 ## 全体像
@@ -202,6 +222,13 @@ OH、OW共に7
 OH、OW共に3
 ```
 
+## 実装
+演習を実行したgoogle colaboratoryのURL：
+* 単層のCNN：https://colab.research.google.com/drive/1rhysNAc4Nl1e12-Wn_dwRHfl2dM1VJ3g?usp=sharing
+* 二層のCNN：https://colab.research.google.com/drive/1kRFrFDQYoXSV6638DoX_Vt1omtaTOSvj?usp=sharing
+  * 100回しか学習していないので、まだ学習は完了していない様子
+  * 単層のCNNと比べても、やはり学習に時間がかかりそう（同じ100回目の時点で正答率が1層のCNNより低い）
+
 # Section5：最新のCNN
 * LeNet：1998年にヤン・ルカンによってモデルが考えられる。
   * 畳込層→PL層→畳込層→PL層→全結合層→全結合層という構成
@@ -213,3 +240,6 @@ OH、OW共に3
 * VGG16、VGG19:畳み込み層と全結合層の数の合計が16や19個の構成
 * GoogLeNet：inceptionモジュールにより並列計算を可能にしたが、層の数を増やしていくと誤差逆伝播しにくくなり学習がうまくいかなくなる問題があった
 * ResNet：skip connectionと呼ばれる層を飛び越えた結合を加えることにより、誤差逆伝播がしやすくなっている。また、様々な形のネットワークのアンサンブル学習にもなっている
+
+## 実装
+演習を実行したgoogle colaboratoryのURL：https://colab.research.google.com/drive/1Q3gAtGThgN6JD2bycR0oI-Uk4sVD_5Gx?usp=sharing
