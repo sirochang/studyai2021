@@ -24,6 +24,22 @@ RNNの3つの重みについてまとめる
 3.中間層から中間層を定義する際にかけられる重み（過去の状態を次の時間以降の状態に反映させる）
 ```
 
+```
+【演習チャレンジ】
+構文木を入力として再帰的に文全体の表現を得るにはどのように特徴を扱うか。
+
+W.dot(np.concatenate([left, right]))のように、leftとrightの情報を損なわないように特徴を得る。
+このままだとleftとrightを合わせた次元数に増えてしまうため、重み計算によって次元を戻したりする。
+```
+
+## 実装
+演習を実行したgoogle colaboratoryのURL：https://colab.research.google.com/drive/1Muytok5Ymao_fohmZ-BfXQG-FzNuCtS2?usp=sharing
+
+確認した点：
+* 学習が進んでいない段階では計算結果はほぼ間違っているが、学習が進んだ段階では計算結果がほぼ正解していること
+* np.unpackbitsの結果
+* 順伝播での再帰箇所確認
+
 # Section2：LSTM
 # Section3：GRU
 # Section4：双方向RNN
