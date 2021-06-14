@@ -8,7 +8,7 @@
 ---
 
 # Section1：再起型ニューラルネットワークの概念
-## RNN
+## 1.1 RNN
 RNNとは時系列データに対応可能なニューラルネットワークである。
 
 そもそも時系列データとは何か？　例えば音声データやテキストデータのことで、時間的順序を追って一定間隔ごとに観察され、相互に統計的依存関係が認められるようなデータの系列のことである。
@@ -32,6 +32,46 @@ W.dot(np.concatenate([left, right]))のように、leftとrightの情報を損�
 このままだとleftとrightを合わせた次元数に増えてしまうため、重み計算によって次元を戻したりする。
 ```
 
+## 1.2 BPTT
+BackPropagationThroughTimeの略、誤差を時間を遡って逆伝播させるRNNにおけるパラメータ調整方法の一つである。
+
+```
+【確認テスト】
+連鎖律の原理を用いて、dz/dxを求めよ。
+
+z=t^2, t=x+y
+
+dz/dx = dz/dt * dt/dx
+      = 2t * 1
+      = 2(x+y)
+```
+
+```
+【確認テスト】
+図のy_1をx, s_0, s_1, w, w_in, w_outを用いて表せ。
+
+y_1 = g(w_out・s_1 + c)
+    = g(w_out・f(w_in・x_1 + w・s_0 + b) + c)
+```
+
+ソースコードの解読が難しかったので、3桁の加算機を例に計算グラフを書いて確認。（下記は概要で、δ[1]ぐらいまで遡っていってようやく理解できました）
+* δ[2] = （d_out[2]とW_outの内積） * d_sig
+* W_out_grad = d_out[1] * z[1]
+* δ[1] = (δ[2]とWの内積 + d_z[1]) * d_sig
+
+```
+【コード演習問題】
+bptt_stepのfor文中のdelta_tの更新式は？
+
+W,U,VをW_in,W,W_outで書き直すとそれぞれ下記の通り
+・W:W_in
+・U：W
+・V：W_out
+
+delta_tは次のループに持ち越されて計算するので、bptt_stepのfor文内はそこまで算出していたdeltaとWとの内積になる。
+よってdelta_t=delta_t.dot(U)になる
+```
+
 ## 実装
 演習を実行したgoogle colaboratoryのURL：https://colab.research.google.com/drive/1Muytok5Ymao_fohmZ-BfXQG-FzNuCtS2?usp=sharing
 
@@ -39,6 +79,8 @@ W.dot(np.concatenate([left, right]))のように、leftとrightの情報を損�
 * 学習が進んでいない段階では計算結果はほぼ間違っているが、学習が進んだ段階では計算結果がほぼ正解していること
 * np.unpackbitsの結果
 * 順伝播での再帰箇所確認
+* 逆伝播の勾配計算時は桁数の上の方から下降していくこと
+* delta[:,8]は更新されないので0のままであること
 
 # Section2：LSTM
 # Section3：GRU
