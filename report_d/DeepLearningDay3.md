@@ -179,6 +179,13 @@ GRUはCECがなく、リセットゲートと更新ゲートのみを持つ
 GRUの方が計算量が少なく、精度はほぼ変わらない
 ```
 
+## 実装
+演習を実行したgoogle colaboratoryのURL：https://colab.research.google.com/drive/1J7h2ss7KsmdRHs4W-hZuMCfg_UZP_z7f?usp=sharing
+
+確認した点：
+* tensorflowのライブラリを利用する方法を確認
+* 実際に学習させようとすると時間がかかるので、学習済みの結果を利用して識別結果を確認
+
 # Section4：双方向RNN
 過去の情報だけでなく未来の情報を加味することで、精度を向上させるためのモデル。機械翻訳など、未来の文章データも学習に使える事例で実用できる。BidirectionalRNNと呼ぶこともある。
 
@@ -196,5 +203,45 @@ ys = hs.dot(V.T)
 zipによってhs_fとhs_bの要素をそれぞれ1つずつ取り出し、[h_f, h_b[::-1]]という配列を作り、ループごとにconcatenateのaxis=1方向に連結させる。
 
 # Section5：Seq2Seq
+Seq2SeqはEncorder-Decorderモデルの一種で、機械対話や機械翻訳などに使用される。例題で用いた加算器も、計算式を入力して計算結果を出力するので、計算式（seq）から計算結果（seq）へ変換していると捉えることもできそう。
+## 5-1.Encorder RNN
+* Taking :文章を単語等のトークン毎に分割し、トークンごとのIDに分割する。
+* Embedding :IDから、そのトークンを表す分散表現ベクトルに変換する。
+* Encoder RNN:ベクトルを順番にRNNに入力していく。
+
+処理手順
+1. vec1をRNNに入力し、hidden stateを出力する。このhidden stateと次の入力vec2をまたRNNに入力し、hidden stateを出力するという流れを繰り返す。
+2. 最後のvecを入れたときのhidden stateをfinal stateとしてとっておく。このfinal stateがthought vectorと呼ばれ、**入力した文の意味を表すベクトル**となる。
+
+## 5-2.Decorder RNN
+処理手順
+1. Decoder RNN: Encoder RNN のfinal state (thought vector) から、各token の生成確率を出力していく。final state をDecoder RNN のinitial state として設定し、Embedding を入力。
+2. Sampling:生成確率にもとづいて token をランダムに選ぶ。
+3. Embedding:2で選ばれた token を Embedding して Decoder RNN への次の入力とする。
+4. Detokenize:1〜3 を繰り返し、2で得られたtoken を文字列に直す。
+
+```
+【確認テスト】
+seq2seqについて説明している文はどれか。
+
+(2)RNNを用いたEncoder-Decoderモデルの一種であり、機械翻訳などのモデルに使われる。
+```
+```python
+# 【演習チャレンジ】
+# 入力である文（文章）を時系列の情報をもつ特徴量へとエンコードする関数について書く。
+
+# words: sequence words, one-hot vector, (n_words, vocab_size)
+# E: word embeding matrix, (embed_size, vocab_size)
+
+for w in words:
+  e = E.dot(w)
+  h = _activation(W.dot(e) + U.dot(h) + b)
+```
+dot積の計算は基本的に行列のshapeを意識しないといけないが、対象がベクトルの場合は適当に変換してくれる。w:(1,vocab_size) -> (vocab_size,1)
+ただし、上記の例でEのshapeが誤っていると計算ができない。（E.T.dot(w）だと(vocab_size, embed_size)*?になるので、shapeからも計算ができないことがわかる。
+
+## 5-3.HRED
+## 5-4.VHRED
+## 5-5.VAE
 # Section6：Word2vec
 # Section7：AttentionMechanism
