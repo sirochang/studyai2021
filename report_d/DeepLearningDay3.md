@@ -303,3 +303,6 @@ word2vec：単語の分散ベクトルを得る手法である。
 seq2seq：一つの時系列データから別の時系列データを得るネットワークである。
 Attention：時系列データの中身の関連性に対して重みをつける手法である。
 ```
+
+## 実装
+演習を実行したgoogle colaboratoryのURL（sin波予測）：https://colab.research.google.com/drive/1QMpYIEQ-FVjDzNqiYkJ2z3ngK_tdonpH?usp=sharing
