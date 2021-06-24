@@ -77,21 +77,24 @@ AlphaGoLeeとの違い
 Residual Networkのメリット
 * ネットワークにショートカット構造を追加して、勾配爆発や勾配消失が起きにくくなる
 * 階層が違うネットワークのアンサンブル効果のようなものを得ることができる
+* Convolution→BatchNorm→ReLU→Convolution→BatchNorm→Add→ReLU
 
 派生系
 * Bottleneck
   * 1×1KernelのConvolutionを利用し、1層目で次元削減を行って3層目で次元を復元する３層構造にする
   * ２層のものと比べて計算量はほぼ同じだが１層増やせるメリットがある
 * PreActivation
-  * ResidualBlockの並びをBatchNorm→ReLU→Convolution→BatchNorm→ReLU→Convolution→Addとすることにより性能が上昇したとするもの
+  * BatchNorm→ReLU→Convolution→BatchNorm→ReLU→Convolution→Add
   * 畳み込みの前に活性化層を配置
 * WideResNet
   * ConvolutionのFilter数をk倍にしたResNet。段階的に幅を増やしていくのが一般的
   * Filter数を増やすことにより、浅い層数でも深い層数のものと同等以上の精度となる
   * GPUをより効率的に使用できるため学習が早い
+  * BatchNorm→ReLU→Convolution→BatchNorm→ReLU→dropout→Convolution→Add
 * PyramidNet
   * WideResNetの課題として、幅が広がった直後の層に過度の負担がかかり精度を落とすと考えた
   * 段階的にではなく、各層でFilter数を増やしていくResNet
+  * BatchNorm→Convolution→BatchNorm→ReLU→Convolution→BatchNorm→Add
 
 # Section3:軽量化・高速化技術
 # Section4:応用モデル
