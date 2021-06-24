@@ -54,6 +54,45 @@
 Jは収益を表すもので、平均報酬や割引報酬和の定義に対して行動価値関数を定義し、方策勾配定理が成り立つので ∇J(θ)を導き出せるらしい。
 
 # Section2:AlphaGo
+## Alpha Go Lee
+* PolicyNet：方策関数を学習させる
+* ValueNet：行動価値関数を学習させる
+入力データは19*19（盤面）*48or49チャンネルで、どちらもCNNで、PolicyNetは二次元データのままSoftMaxで確率を、ValuNetは勝率を得るために全結合を行なって出力する。
+
+AlphaGoの学習
+* 教師あり学習によるRollOutPolicyとPolicyNetの学習
+  * 強化学習を早く効率よく学習させるために、事前に教師あり学習を行なっておく。さらに計算量が少ないRollOutPolicyも学習させておく
+* 強化学習によるPolicyNetの学習
+* 強化学習によるValueNetの学習
+  * モンテカルロ木探索を用いて学習する（このときRollOutPolicyを使える）
+
+## Alpha Go Zero
+AlphaGoLeeとの違い
+* 教師あり学習を一切行わず、強化学習のみ
+* 特徴入力からヒューリスティックな要素を排除（17チャンネル）
+* PolicyNetとValueNetを一つのネットワークに結合した
+* Residual Networkを導入した
+* モンテカルロ木探索からRollOutシミュレーションをなくした
+
+Residual Networkのメリット
+* ネットワークにショートカット構造を追加して、勾配爆発や勾配消失が起きにくくなる
+* 階層が違うネットワークのアンサンブル効果のようなものを得ることができる
+
+派生系
+* Bottleneck
+  * 1×1KernelのConvolutionを利用し、1層目で次元削減を行って3層目で次元を復元する３層構造にする
+  * ２層のものと比べて計算量はほぼ同じだが１層増やせるメリットがある
+* PreActivation
+  * ResidualBlockの並びをBatchNorm→ReLU→Convolution→BatchNorm→ReLU→Convolution→Addとすることにより性能が上昇したとするもの
+  * 畳み込みの前に活性化層を配置
+* WideResNet
+  * ConvolutionのFilter数をk倍にしたResNet。段階的に幅を増やしていくのが一般的
+  * Filter数を増やすことにより、浅い層数でも深い層数のものと同等以上の精度となる
+  * GPUをより効率的に使用できるため学習が早い
+* PyramidNet
+  * WideResNetの課題として、幅が広がった直後の層に過度の負担がかかり精度を落とすと考えた
+  * 段階的にではなく、各層でFilter数を増やしていくResNet
+
 # Section3:軽量化・高速化技術
 # Section4:応用モデル
 # Section5:Transformer
