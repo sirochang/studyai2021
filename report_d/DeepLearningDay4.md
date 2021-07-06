@@ -224,6 +224,35 @@ DenseNetとResNetの違い
 通常であれば各時刻のデータを次時刻のデータへ伝達させていくのだが、DilatedConvolutionでは層が深くなるにつれて畳み込む時刻を離すことが特徴で、パラメータ数に対する受容野を広げることができる。
 
 # Section5:Transformer
+可変長の時系列データを扱う場合にはRNNが用いられ、入力文章から別の文章を出力するというモデル（Seq2Seq）はAttentionを用いたエンコーダ-デコーダ形式のRNNやCNNが主流だった。
+
+ただし、時間軸方向に並列的に処理することが難しかったため、上記に代わる手法としてAttentionのみを用いたモデルであるTransformerが提案された。Transformerは他のタスクにも汎用性が高く、BERTにも用いられている。
+
+モデルの概要をまとめておく。
+
+* エンコーダ-デコーダモデルである
+  * 基本的な構造としては従来のSeq2Seqと同じようにエンコーダ-デコーダに分かれており、学習が進むとエンコーダの出力がうまく文章表現を捉えることになる。
+* self-attentionを用いる
+  * 文中のある単語の意味を理解する時に、文中の単語のどれに注目すれば良いかを表すスコアをAttentionと呼び、辞書オブジェクトのようなものとして捉えることができる
+    * queryに一致するkeyを索引し、対応するvalueを取り出す操作
+  * source-target attentionはエンコード結果とデコード対象の2文からAttentionするのに対し、self-attentionではエンコーダとデコーダでそれぞれの文に対してのみAttentionを用いる
+  * Attentionを用いる箇所
+    * エンコーダ：self-attention
+    * デコーダ：マスク済みself-attention（カンニングを防ぐ）
+    * エンコーダ-デコーダ：source-target attention
+* Position-wise 全結合層を用いる
+  * 各ブロックのattention層の後に入っている層
+  * 各単語ごとに独立してニューラルネットワークがある
+    * 2層のニューラルネットワーク（線形変換、ReLU、線形変換）になっており、それぞれ重みは共有
+* Positional Encodingを用いる
+  * 上記の機能だけだと単語の順番の情報を扱えない
+  * 一番最初にモデルに単語の分散表現を入力する時に単語位置に一意の値を各分散表現に加算する
+  * Transformerではsin関数とcos関数を使っている
+
+## 参考文献
+* https://qiita.com/omiita/items/07e69aef6c156d23c538
+* https://deeplearning.hatenablog.com/entry/transformer
+
 # Section6:物体検知・セグメンテーション
 物体認識タスクとして主に下記の4つあり、それぞれ出力が異なる。入力はカラー・モノクロ問わない画像。
 * 分類：画像に対し単一または複数のクラスラベル
