@@ -264,6 +264,7 @@ DenseNetとResNetの違い
   * torchのセットアップからうまくいかなかった。（pipでver指定でtorchをinstallできなかった）
   * beam searchがうまくいかなかった
     * torch.index_select(instance, dim, index)で引数のindex(next_beam_indices)にはint型を渡す必要があるが、next_beam_indicesがint型にならない
+* https://colab.research.google.com/drive/1r1anPaO3ZQsywIE_0xJESen5Fa8tCz4-?usp=sharing
 
 # Section6:物体検知・セグメンテーション
 物体認識タスクとして主に下記の4つあり、それぞれ出力が異なる。入力はカラー・モノクロ問わない画像。
