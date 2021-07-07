@@ -223,6 +223,11 @@ DenseNetとResNetの違い
 
 通常であれば各時刻のデータを次時刻のデータへ伝達させていくのだが、DilatedConvolutionでは層が深くなるにつれて畳み込む時刻を離すことが特徴で、パラメータ数に対する受容野を広げることができる。
 
+## 実装
+演習を実行したgoogle colaboratoryのURL：
+* https://colab.research.google.com/drive/1iNVmhjLu6tMHlw_NiAEM_Kc_fR00cz9w?usp=sharing
+* https://colab.research.google.com/drive/1G8MnOe_c_cjpfvbRqlORqHEutRAgWZfD?usp=sharing
+
 # Section5:Transformer
 可変長の時系列データを扱う場合にはRNNが用いられ、入力文章から別の文章を出力するというモデル（Seq2Seq）はAttentionを用いたエンコーダ-デコーダ形式のRNNやCNNが主流だった。
 
@@ -252,6 +257,13 @@ DenseNetとResNetの違い
 ## 参考文献
 * https://qiita.com/omiita/items/07e69aef6c156d23c538
 * https://deeplearning.hatenablog.com/entry/transformer
+
+## 実装
+演習を実行したgoogle colaboratoryのURL：
+* https://colab.research.google.com/drive/1Bzr8m_u7bVVlMbe_Q24j4CVPIHbGJAWw?usp=sharing
+  * torchのセットアップからうまくいかなかった。（pipでver指定でtorchをinstallできなかった）
+  * beam searchがうまくいかなかった
+    * torch.index_select(instance, dim, index)で引数のindex(next_beam_indices)にはint型を渡す必要があるが、next_beam_indicesがint型にならない
 
 # Section6:物体検知・セグメンテーション
 物体認識タスクとして主に下記の4つあり、それぞれ出力が異なる。入力はカラー・モノクロ問わない画像。
